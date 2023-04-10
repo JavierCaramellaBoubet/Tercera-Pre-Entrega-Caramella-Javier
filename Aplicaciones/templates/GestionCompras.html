@@ -37,27 +37,28 @@
         </div>
     </div>
     <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
-        <h1>Listado de Compras</h1>
+        <h1>Carrito de Compras</h1>
         <div class="table-responsive py-2">
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Código</th>
-                        <th>Nombre</th>
+                        <th>Nombre del Producto</th>
                         <th>Cantidad</th>
                         <th colspan="2">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for compra in Compras %}
+                    {% for compra in compra %}
                     <tr>
                         <td>{{forloop.counter}}</td>
                         <td>{{compra.codigo}}</td>
                         <td>{{compra.nombre}}</td>
                         <td>{{compra.cantidad}}</td>
-                        <td><a href="EdicionCompra/{{compra.codigo}}" class="btn btn-info">Editar</a></td>
-                        <td><a href="EliminarCompra/{{compra.codigo}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
+ 
+                        <td><a href="edicionCompra/{{compra.codigo}}" class="btn btn-info">Editar</a></td>
+                        <td><a href="eliminarCompra/{{compra.codigo}}" class="btn btn-danger btnEliminacion">Eliminar</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
