@@ -1,0 +1,58 @@
+{% extends "Aplicaciones/base.html" %}
+
+{% load static %}
+
+{% block titulo %}
+    <h1> Bienvenidos a REGISTRO DE USUARIOS! </h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+<h1> Hola USUARIO NUEVO </h1>
+
+<form action="" method="post">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}  {# form.as_p / form.as_ul / form #}
+    </table>
+       <input type="submit" value="Agregar">   
+</form>
+
+<table>
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>E-mail</th>
+            <th>DNI</th>      
+        </tr>        
+    </thead>
+
+    <tbody>
+
+        {% for usuario in usuarios %}
+        <tr>
+            <td>
+                {{ usuario.id }}
+            </td>
+            <td>
+                {{ usuario.nombre }}
+            </td>
+            <td>
+                {{ usuario.apellido }}
+            </td>
+            <td>
+                {{ usuario.email }}
+            </td>
+            <td>
+                {{ usuario.dni }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+
+{% endblock %}
