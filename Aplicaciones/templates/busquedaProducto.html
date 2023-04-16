@@ -1,0 +1,22 @@
+{% extends "inicio.html" %}
+
+{% load static %}
+
+{% block titulo %}
+<h1 class="mb-5">FORMULARIO DE BUSQUEDA DE PRODUCTOS</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+<h3>{{ mensaje }}</h3>
+
+<form action="{% url 'buscandoProducto' %}" method="GET"> 
+
+    <input type="text" name="name" id="name" placeholder="INSERTE PRODUCTO">
+
+    <input type="submit" value="Buscar Producto">
+
+
+</form>
+
+{% endblock %}

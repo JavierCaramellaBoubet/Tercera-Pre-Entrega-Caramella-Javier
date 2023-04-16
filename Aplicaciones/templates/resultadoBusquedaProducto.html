@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block titulo %}
+<h1 class="mb-5">Resultados de la busqueda de Productos</h1>
+{% endblock %}
+
+{% block contenido_que_cambia %}
+
+{% if compra %}
+
+<h2>LISTADO DE PRODUCTOS</h2>
+<table>
+    <thead>
+        <tr>
+            
+            <th>Códigp</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+
+
+
+        {% for compra in compra %}
+        <tr>
+            
+            <td>
+                {{ compra.codigo }}
+            </td>
+            <td>
+                {{ compra.nombre }}
+            </td>
+            <td>
+                {{ compra.cantidad }}
+            </td>
+            
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+
+<h2>NO HAY PRODUCTOS QUE RESPONDAN A ESA BUSQUEDA</h2>
+
+{% endif %}
+
+
+
+{% endblock %}

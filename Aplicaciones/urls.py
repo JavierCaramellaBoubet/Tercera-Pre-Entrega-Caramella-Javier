@@ -14,6 +14,11 @@ urlpatterns = [
     path('contacto/', contacto, name="contacto"),
     path('promociones/', promociones, name="promociones"),
     path('crear_usuario/', crear_usuario, name="crear_usuario"),
+    path('crear_usuario/', views.crear_usuario, name="crear_usuario"),
 
+    path('buscarProducto/', buscarProducto, name="buscarProducto"),
+    path('buscandoProducto/', buscandoProducto, name="buscandoProducto"),
+    path('nuestraEmpresa/',views.nuestraEmpresa, name= 'nuestraEmpresa')
+    
     
 ]

@@ -4,9 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from .forms import UsuarioForm
 from django.shortcuts import render
-
 from .forms import *
-from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 #import datetime  #Para usar luego en el Día y Hora de la Compra
@@ -30,8 +28,7 @@ def crear_usuario(request):
 
     else:
         form= UsuarioForm()
-    return render(request, "crear_usuario.html", {"form": form})    
-
+    return render(request, "crear_usuario.html", {"form": form}) 
 
         
 
@@ -124,4 +121,65 @@ def vista5(request):
     diccionario={}
     return render(request, "Aplicaciones/templates/base.html", context=diccionario)
 
+
+
+
+def registrarUsuario(request):
+    nombre = request.POST['txtNombre']
+    apellido = request.POST['txtApellido']
+    email = request.POST['numEmail']
+
+
+    usuario = Usuario.objects.create(nombre=nombre, apellido=apellido, email=email)
+    messages.success(request,'¡USUARIO REGISTRADO CORRECTAMENTE!!!')
+    return redirect('/')
+
+
+def edicionUsuario(request, apellido):
+    usuario = Usuario.objects.get(apellido=apellido)
+    return render(request, "edicionUsuario.html", {"usuario": usuario})
+
+
+def editarUsuario(request):
+    nombre = request.POST['txtNombre']
+    apellido = request.POST['txtApellido']
+    email = request.POST['numEmail']
+
+    usuario = Usuario.objects.get(apellido=apellido)
+    usuario.nombre= nombre
+    usuario.apellido= apellido
+    usuario.email=email
+    usuario.save()
+
+    messages.success(request, '¡USUARIO ACTUALIZADO!')
+
+    return redirect('/')
+
+
+def eliminarUsuario(request, apellido):
+    usuario = Usuario.objects.get(apellido=apellido)
+    usuario.delete()
+
+    messages.success(request, '¡USUARIO ELIMINADO!!!')
+
+    return redirect('/')
+
+
+
+
+def buscarProducto(request):
+    return render(request, "busquedaProducto.html")
+
+def buscandoProducto(request):
+    productoIngresado= request.GET["nombre"]
+    if productoIngresado!="":
+        productos=Compra.objects.filter(producto__icontains=productoIngresado)
+        print(productos)
+        return render(request, "resultadoBusquedaProducto.html", {"nombre": productos})
+    else:
+        return render(request, "busquedaProducto.html", {"mensaje": "POR FAVOR INGRESA UN PRODUCTO PARA BUSCAR!!!"})
+    
+
+def nuestraEmpresa(request):
+    return render(request, 'nuestraEmpresa.html')
 
