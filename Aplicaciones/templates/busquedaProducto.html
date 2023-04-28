@@ -1,4 +1,4 @@
-{% extends "inicio.html" %}
+{% extends "base.html" %}
 
 {% load static %}
 
@@ -12,7 +12,7 @@
 
 <form action="{% url 'buscandoProducto' %}" method="GET"> 
 
-    <input type="text" name="name" id="name" placeholder="INSERTE PRODUCTO">
+    <input type="text" name="nombre" id="nombre" placeholder="INSERTE PRODUCTO">
 
     <input type="submit" value="Buscar Producto">
 

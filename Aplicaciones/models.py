@@ -27,15 +27,13 @@ class Usuario(models.Model):
     
 
 class Entrega(models.Model):
-    ciudad = models.CharField(max_length=50)  #Debo inluir el random para generar el código de manera aleatoria.
-    direccion = models.CharField(max_length=50)
-    fecha_entrega= models.DateField()
-    hora= models.TimeField()
-    comentarios = models.CharField(max_length=50)
+    codigo = models.CharField(primary_key=True, max_length=6)
+    nombre = models.CharField(max_length=50)
+    cantidad = models.PositiveSmallIntegerField()
 
     def __str__(self):
-        texto = "{0} ({1}) ({2}) ({3}) ({4}) ({5}) "
-        return texto.format(self.ciudad,self.direccion,self.fecha_entrega,self.hora,self.comentarios)    
+        texto = "{0} ({1})"
+        return texto.format(self.nombre,self.cantidad)  
     
 
     

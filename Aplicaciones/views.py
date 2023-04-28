@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Compra, Usuario
+from .models import Compra, Usuario, Entrega
 from django.contrib import messages
 from django.http import HttpResponse
 from .forms import UsuarioForm
@@ -30,7 +30,6 @@ def crear_usuario(request):
         form= UsuarioForm()
     return render(request, "crear_usuario.html", {"form": form}) 
 
-        
 
 
     #nombre_usuario = "Javier"
@@ -44,8 +43,8 @@ def crear_usuario(request):
 
     #return HttpResponse(respuesta)
 
-def inicio(request):
-    return HttpResponse("BIENVENIDOS A LA PAGINA PRINCIPAL DE COMPRAS ONLINE")
+##def inicio(request):
+##   return HttpResponse("BIENVENIDOS A LA PAGINA PRINCIPAL DE COMPRAS ONLINE")
 
 def inicioApp(request):
     #return render(request, 'Aplicaciones/inicioApp.html')
@@ -53,30 +52,22 @@ def inicioApp(request):
 
 
 def contacto(request):
-       pass
-#        contacto1= "                    ESTAMOS PARA AYUDARTE!           "
-#        contacto2= "Atención al Cliente (0800-444-8484) Disponible de Lun a Vie de 9 a 18hs."
-#        contacto3= "clientes@superonline.com.ar"
-#        contacto4= "         AGUARDE Y SERÁ ATENDIDO POR UN REPRESENTANTE            "
+    return render(request, 'contacto.html')       
+      
 
-#        contacto5= "###############################################################################"
-#        contacto6= "-------------------------------------------------------------------------------"
-
-#       dato_contacto= contacto1 + contacto2 + \n {contacto3} + \n {contacto4} + \n {contacto5} + \n {contacto6}
-        #return HttpResponse(f"ESTOS SON LOS MEDIOS DE CONTACTO" + "\n                    ESTAMOS PARA AYUDARTE!           ")
-       return render(contacto)
 
 
 def promociones(request):
     return render(request, 'promociones.html')
     #return HttpResponse("ESTAS SON LAS PROMOCIONES")
 
-
-def home(request):
+def inicio(request):
+#def home(request):
     compraListados = Compra.objects.all()
     messages.success(request, '¡Compras listadas!')
     return render(request, "GestionCompras.html", {"compra": compraListados})
 
+#########################################################################################
 
 def registrarCompra(request):
     codigo = request.POST['txtCodigo']
@@ -117,9 +108,7 @@ def eliminarCompra(request, codigo):
 
     return redirect('/')
 
-def vista5(request):
-    diccionario={}
-    return render(request, "Aplicaciones/templates/base.html", context=diccionario)
+#####################################################################################
 
 
 
@@ -164,22 +153,68 @@ def eliminarUsuario(request, apellido):
 
     return redirect('/')
 
-
+#######################################################################################################
 
 
 def buscarProducto(request):
-    return render(request, "busquedaProducto.html")
+    return render(request, 'busquedaProducto.html')
+
+ 
+
 
 def buscandoProducto(request):
     productoIngresado= request.GET["nombre"]
     if productoIngresado!="":
-        productos=Compra.objects.filter(producto__icontains=productoIngresado)
+        productos=Compra.objects.filter(nombre__icontains=productoIngresado)
         print(productos)
         return render(request, "resultadoBusquedaProducto.html", {"nombre": productos})
     else:
         return render(request, "busquedaProducto.html", {"mensaje": "POR FAVOR INGRESA UN PRODUCTO PARA BUSCAR!!!"})
     
 
+        
+
 def nuestraEmpresa(request):
     return render(request, 'nuestraEmpresa.html')
 
+
+############################################################################################################
+
+def registrarEntrega(request):
+    codigo = request.POST['txtCodigo']
+    nombre = request.POST['txtNombre']
+    cantidad = request.POST['numCantidad']
+
+
+    entrega = Entrega.objects.create(codigo=codigo, nombre=nombre, cantidad=cantidad)
+    messages.success(request,'¡Entrega registrada!')
+    return redirect('/')
+
+
+def edicionEntrega(request, codigo):
+    entrega = Entrega.objects.get(codigo=codigo)
+    return render(request, "edicionEntrega.html", {"entrega": entrega})
+
+
+def editarEntrega(request):
+    codigo = request.POST['txtCodigo']
+    nombre = request.POST['txtNombre']
+    cantidad = request.POST['numCantidad']
+
+    entrega = Entrega.objects.get(codigo=codigo)
+    entrega.nombre = nombre
+    entrega.cantidad = cantidad
+    entrega.save()
+
+    messages.success(request, '¡Entrega actualizada!')
+
+    return redirect('/')
+
+
+def eliminarEntrega(request, codigo):
+    entrega = Entrega.objects.get(codigo=codigo)
+    entrega.delete()
+
+    messages.success(request, '¡Entrega eliminada!')
+
+    return redirect('/')

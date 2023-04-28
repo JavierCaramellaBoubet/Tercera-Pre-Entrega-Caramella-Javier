@@ -10,6 +10,6 @@ admin.site.register(Entrega)
 #admin.site.register(inicio)
 #admin.site.register(Carrito_pago)
 
-#admin.site.register(promociones)
+
 
 
